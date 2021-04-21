@@ -2,6 +2,7 @@ package ru.list.nataguseva.pages;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -9,8 +10,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class MailBoxPage extends BasePage{
 
-    @FindBy(xpath="//*[@id=\"nb-1\"]/body/div[10]/div/div/div[1]")
+    @FindBy(xpath="/html/body/div[9]/div/div/div[1]")
     WebElement inboxFolderButton;
+    @FindBy(xpath="//*[@id=\"nb-1\"]/body/div[9]")
+    WebElement foldersPopUp;
 
     @FindBy(xpath="//*[@id=\"nb-1\"]/body/div[2]/div[7]/div/div[2]/div/div/div[1]/div/div/div/div/div[1]/form")
     WebElement collapsedSearchField;
@@ -56,6 +59,11 @@ public class MailBoxPage extends BasePage{
         (new WebDriverWait(driver,5)).
                 until(ExpectedConditions.elementToBeClickable(inboxFolderButton));
         inboxFolderButton.click();
+    }
+    public void hoverInboxFolderButton() {
+        (new WebDriverWait(driver,5)).
+                until(ExpectedConditions.attributeToBe(foldersPopUp,));
+        (new Actions(driver)).moveToElement(inboxFolderButton).click().build().perform();
     }
 }
 

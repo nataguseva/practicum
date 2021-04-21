@@ -46,7 +46,8 @@ public class MailBoxTest {
         Thread.sleep(5000);
         System.out.println(driver.getWindowHandle());
 
-        mailBoxPage.clickInboxFolderButton();
+        //mailBoxPage.clickInboxFolderButton();
+        mailBoxPage.hoverInboxFolderButton();
 
 
     /*@AfterClass
