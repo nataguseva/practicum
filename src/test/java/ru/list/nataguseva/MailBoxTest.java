@@ -1,6 +1,5 @@
 package ru.list.nataguseva;
 
-import ru.list.nataguseva.ConfProperties;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
@@ -44,10 +43,11 @@ public class MailBoxTest {
         mailBoxPage.clickSearchButton();
         mailBoxPage.clickFoldersButton();
         Thread.sleep(5000);
-        System.out.println(driver.getWindowHandle());
 
-        //mailBoxPage.clickInboxFolderButton();
-        mailBoxPage.hoverInboxFolderButton();
+        mailBoxPage.clickInboxFolderButton();
+        Thread.sleep(2000);
+        mailBoxPage.getSearchSummaryField();
+       // mailBoxPage.hoverInboxFolderButton();
 
 
     /*@AfterClass
