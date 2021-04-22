@@ -30,6 +30,10 @@ public class MailBoxPage extends BasePage{
     @FindBy(xpath="//*[@id=\"nb-1\"]/body/div[2]/div[7]/div/div[3]/div[3]/div[2]/div[5]/div[1]/div/div/div[2]/div/div[1]/div/span/span")
     WebElement searchSummaryField;
 
+    @FindBy(xpath="//a[@title=\"Написать (w, c)\"]")
+    WebElement writeMailButton;
+
+
 
     public MailBoxPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
@@ -66,11 +70,18 @@ public class MailBoxPage extends BasePage{
         inboxFolderButton.click();
     }
 
-    public void getSearchSummaryField() {
+    public String getSearchSummaryField() {
         (new WebDriverWait(driver,5)).
                 until(ExpectedConditions.visibilityOf(searchSummaryField));
-        System.out.println(searchSummaryField.getText());
+        return searchSummaryField.getText();
     }
+
+    public void clickWriteMailButton() {
+        (new WebDriverWait(driver,5)).
+                until(ExpectedConditions.elementToBeClickable(writeMailButton));
+        writeMailButton.click();
+    }
+
     }
 
 

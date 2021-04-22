@@ -6,10 +6,13 @@ import org.openqa.selenium.WebDriver;
 import ru.list.nataguseva.pages.*;
 import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.chrome.ChromeDriver;
+import ru.list.nataguseva.resources.Helper;
 //import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class MailBoxTest {
     static WebDriver driver;
+    static int oldMailWithThemeCount;
+    static int newMailWithThemeCount;
     LoginPage loginPage;
     MailBoxPage mailBoxPage;
 
@@ -48,6 +51,9 @@ public class MailBoxTest {
         Thread.sleep(2000);
         mailBoxPage.getSearchSummaryField();
        // mailBoxPage.hoverInboxFolderButton();
+        newMailWithThemeCount = Helper.getCount(mailBoxPage.getSearchSummaryField());
+        System.out.println(newMailWithThemeCount);
+        mailBoxPage.clickWriteMailButton();
 
 
     /*@AfterClass
