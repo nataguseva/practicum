@@ -54,63 +54,74 @@ public class MailBoxPage extends BasePage{
         this.driver = driver;
     }
     public void clickFoldersButton() {
-        wait5SecondsForClickabilityOfElement(foldersButton);
+        waitForClickabilityOfElement(foldersButton);
         foldersButton.click();
     }
 
     public void fillExpandedSearchField(String keyWord) {
-        wait5SecondsForClickabilityOfElement(expandedSearchField);
+        waitForClickabilityOfElement(expandedSearchField);
         expandedSearchField.sendKeys(keyWord);
     }
     public void clickCollapsedSearchField() {
-        wait5SecondsForClickabilityOfElement(collapsedSearchField);
+        waitForClickabilityOfElement(collapsedSearchField);
         collapsedSearchField.click();
     }
 
     public void clickSearchButton() {
-        wait5SecondsForClickabilityOfElement(searchButton);
+        waitForClickabilityOfElement(searchButton);
         searchButton.click();
     }
 
     public void clickInboxFolderButton() {
-        wait5SecondsForVisibilityOfElement(foldersPopUp);
-        wait5SecondsForClickabilityOfElement(inboxFolderButton);
+        waitForVisibilityOfElement(foldersPopUp);
+        waitForClickabilityOfElement(inboxFolderButton);
         inboxFolderButton.click();
     }
 
     public String getSearchSummaryField() {
-        wait5SecondsForVisibilityOfElement(searchSummaryField);
+        waitForVisibilityOfElement(searchSummaryField);
         return searchSummaryField.getText();
     }
 
     public void clickWriteMailButton() {
-        wait5SecondsForClickabilityOfElement(writeMailButton);
+        waitForClickabilityOfElement(writeMailButton);
         writeMailButton.click();
     }
     public void clickToWhomButton() {
-        wait5SecondsForClickabilityOfElement(toWhomButton);
+        waitForClickabilityOfElement(toWhomButton);
         toWhomButton.click();
     }
     public void clickToSelfButton() {
-        wait5SecondsForVisibilityOfElement(toSelfButton);
-        wait5SecondsForClickabilityOfElement(toSelfButton);
+        waitForVisibilityOfElement(toSelfButton);
+        waitForClickabilityOfElement(toSelfButton);
         toSelfButton.click();
     }
     public void fillThemeField(String theme) {
-        wait5SecondsForClickabilityOfElement(themeField);
+        waitForClickabilityOfElement(themeField);
         themeField.click();
-        wait5SecondsForClickabilityOfElement(themeField);
+        waitForClickabilityOfElement(themeField);
         themeField.sendKeys(theme, Keys.ENTER);
     }
 
-    public void fillMailTextField(String searchSummary){
-        wait5SecondsForClickabilityOfElement(mailTextField);
-        mailTextField.sendKeys(searchSummary);
+    public void fillMailTextField(String text){
+        waitForClickabilityOfElement(mailTextField);
+        mailTextField.sendKeys(text);
     }
     public void clickSendMailButton() {
-        wait5SecondsForClickabilityOfElement(sendMailButton);
+        waitForClickabilityOfElement(sendMailButton);
         sendMailButton.click();
     }
+
+
+    public void writeMail(String theme, String text) {
+        clickWriteMailButton();
+        clickToWhomButton();
+        clickToSelfButton();
+        fillThemeField(theme);
+        fillMailTextField(text);
+        clickSendMailButton();
+    }
+
 }
 
 

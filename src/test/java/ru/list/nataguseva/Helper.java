@@ -1,4 +1,4 @@
-package ru.list.nataguseva.resources;
+package ru.list.nataguseva;
 
 public class Helper {
 

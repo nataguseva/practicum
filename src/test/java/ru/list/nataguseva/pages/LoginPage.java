@@ -1,16 +1,17 @@
 package ru.list.nataguseva.pages;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 
-public class LoginPage extends BasePage{
+public class LoginPage extends BasePage {
 
-    @FindBy(id="passp-field-login")
+    @FindBy(id = "passp-field-login")
     WebElement loginField;
 
-    @FindBy(id="passp-field-passwd")
+    @FindBy(id = "passp-field-passwd")
     WebElement passwordField;
 
     @FindBy(xpath = "//form/div[3]/button")
@@ -35,31 +36,48 @@ public class LoginPage extends BasePage{
     }
 
     public void setLogin(String login) {
-        wait5SecondsForClickabilityOfElement(loginField);
+        waitForClickabilityOfElement(loginField);
         loginField.sendKeys(login);
 
     }
 
     public void setPassword(String password) {
-       wait5SecondsForClickabilityOfElement(passwordField);
+        waitForClickabilityOfElement(passwordField);
         passwordField.sendKeys(password);
     }
 
     public void clickSubmitLoginButton() {
-        wait5SecondsForClickabilityOfElement(submitLoginButton);
+        waitForClickabilityOfElement(submitLoginButton);
         submitLoginButton.click();
     }
+
     public void clickSubmitPasswordButton() {
-        wait5SecondsForClickabilityOfElement(submitPasswordButton);
+        waitForClickabilityOfElement(submitPasswordButton);
         submitPasswordButton.click();
     }
-    public void logout() {
-        wait5SecondsForClickabilityOfElement(accountMenuButton);
+
+    public void clickAccountMenuButton() {
+        waitForClickabilityOfElement(accountMenuButton);
         accountMenuButton.click();
-        wait5SecondsForVisibilityOfElement(accountMenuPopUp);
-        wait5SecondsForClickabilityOfElement(logoutButton);
+    }
+
+    public void clickLogoutButton() {
+        waitForVisibilityOfElement(accountMenuPopUp);
+        waitForClickabilityOfElement(logoutButton);
         logoutButton.click();
     }
 
+    public void login(String login, String password) {
+        setLogin(login);
+        clickSubmitLoginButton();
+        setPassword(password);
+        clickSubmitPasswordButton();
     }
+
+    public void logout() {
+        clickAccountMenuButton();
+        clickLogoutButton();
+    }
+
+}
 

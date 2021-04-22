@@ -6,10 +6,10 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import ru.list.nataguseva.pages.*;
+
 import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.chrome.ChromeDriver;
-import ru.list.nataguseva.resources.Helper;
-//import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class MailBoxTest {
     static WebDriver driver;
@@ -35,10 +35,7 @@ public class MailBoxTest {
         driver.get(ConfProperties.getProperty("authorizationYandexURL"));
 
         loginPage = new LoginPage(driver);
-        loginPage.setLogin(ConfProperties.getProperty("login"));
-        loginPage.clickSubmitLoginButton();
-        loginPage.setPassword(ConfProperties.getProperty("password"));
-        loginPage.clickSubmitPasswordButton();
+        loginPage.login(ConfProperties.getProperty("login"), ConfProperties.getProperty("password"));
 
         Thread.sleep(2000);
 
@@ -55,12 +52,8 @@ public class MailBoxTest {
         Thread.sleep(2000);
         searchSummary = mailBoxPage.getSearchSummaryField();
         oldCountOfMails = Helper.getCount(mailBoxPage.getSearchSummaryField());
-        mailBoxPage.clickWriteMailButton();
-        mailBoxPage.clickToWhomButton();
-        mailBoxPage.clickToSelfButton();
-        mailBoxPage.fillThemeField(ConfProperties.getProperty("theme"));
-        mailBoxPage.fillMailTextField("Найдено " + searchSummary);
-        mailBoxPage.clickSendMailButton();
+        mailBoxPage.writeMail(ConfProperties.getProperty("theme"), mailBoxPage.getSearchSummaryField());
+
         Thread.sleep(15000);
         driver.navigate().refresh();
         newCountOfMails = Helper.getCount(mailBoxPage.getSearchSummaryField());
@@ -68,10 +61,10 @@ public class MailBoxTest {
         Assert.assertTrue(newCountOfMails > oldCountOfMails);
     }
 
-        @After
+    @After
     public void tearDown() {
-            driver.get(ConfProperties.getProperty("authorizationYandexURL"));
-            loginPage.logout();
+        driver.get(ConfProperties.getProperty("authorizationYandexURL"));
+        loginPage.logout();
         driver.quit();
     }
 }
