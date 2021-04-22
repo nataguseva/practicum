@@ -1,6 +1,9 @@
 package ru.list.nataguseva.pages;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.list.nataguseva.ConciseAPI;
 
 /**
@@ -21,4 +24,14 @@ public class BasePage extends ConciseAPI {
     }
 
     protected WebDriver driver;
+
+    public void wait5SecondsForVisibilityOfElement(WebElement element) {
+        (new WebDriverWait(driver,5)).
+                until(ExpectedConditions.visibilityOf(element));
+    }
+    public void wait5SecondsForClickabilityOfElement(WebElement element) {
+        (new WebDriverWait(driver,5)).
+                until(ExpectedConditions.elementToBeClickable(element));
+    }
+
 }

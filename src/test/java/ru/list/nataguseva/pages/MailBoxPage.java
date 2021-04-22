@@ -1,11 +1,10 @@
 package ru.list.nataguseva.pages;
 
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class MailBoxPage extends BasePage{
 
@@ -33,6 +32,21 @@ public class MailBoxPage extends BasePage{
     @FindBy(xpath="//a[@title=\"Написать (w, c)\"]")
     WebElement writeMailButton;
 
+    @FindBy(xpath="//*[@id=\"nb-1\"]/body/div[2]/div[10]/div/div/div[2]/div/div[2]/div/div[1]/div[1]/div[1]/div/div[1]/div[1]/div[1]/div/div/div/div/div")
+    WebElement toWhomButton;
+
+    @FindBy(xpath="//div[@class=\"ComposeContactsList ComposeContactsSuggestDesktop-List\"]")
+    WebElement toSelfButton;
+
+    @FindBy(xpath="//input[@class=\"composeTextField ComposeSubject-TextField\"]")
+    WebElement themeField;
+
+    @FindBy(xpath="//div[@id=\"cke_1_contents\"]/div/div")
+    WebElement mailTextField;
+
+    @FindBy(xpath ="//*[@id=\"nb-1\"]/body/div[2]/div[10]/div/div/div[2]/div/div[2]/div/div[1]/div[1]/div[2]/div/div[1]/div[1]/button")
+    WebElement sendMailButton;
+
 
 
     public MailBoxPage(WebDriver driver) {
@@ -40,49 +54,64 @@ public class MailBoxPage extends BasePage{
         this.driver = driver;
     }
     public void clickFoldersButton() {
-        (new WebDriverWait(driver,5)).
-                until(ExpectedConditions.elementToBeClickable(foldersButton));
+        wait5SecondsForClickabilityOfElement(foldersButton);
         foldersButton.click();
     }
 
     public void fillExpandedSearchField(String keyWord) {
-        (new WebDriverWait(driver,5)).
-                until(ExpectedConditions.elementToBeClickable(expandedSearchField));
+        wait5SecondsForClickabilityOfElement(expandedSearchField);
         expandedSearchField.sendKeys(keyWord);
     }
     public void clickCollapsedSearchField() {
-        (new WebDriverWait(driver,5)).
-                until(ExpectedConditions.elementToBeClickable(collapsedSearchField));
+        wait5SecondsForClickabilityOfElement(collapsedSearchField);
         collapsedSearchField.click();
     }
 
     public void clickSearchButton() {
-        (new WebDriverWait(driver,5)).
-                until(ExpectedConditions.elementToBeClickable(searchButton));
+        wait5SecondsForClickabilityOfElement(searchButton);
         searchButton.click();
     }
 
     public void clickInboxFolderButton() {
-        (new WebDriverWait(driver,5)).
-                until(ExpectedConditions.visibilityOf(foldersPopUp));
-        (new WebDriverWait(driver, 5)).
-                until(ExpectedConditions.elementToBeClickable(inboxFolderButton));
+        wait5SecondsForVisibilityOfElement(foldersPopUp);
+        wait5SecondsForClickabilityOfElement(inboxFolderButton);
         inboxFolderButton.click();
     }
 
     public String getSearchSummaryField() {
-        (new WebDriverWait(driver,5)).
-                until(ExpectedConditions.visibilityOf(searchSummaryField));
+        wait5SecondsForVisibilityOfElement(searchSummaryField);
         return searchSummaryField.getText();
     }
 
     public void clickWriteMailButton() {
-        (new WebDriverWait(driver,5)).
-                until(ExpectedConditions.elementToBeClickable(writeMailButton));
+        wait5SecondsForClickabilityOfElement(writeMailButton);
         writeMailButton.click();
     }
-
+    public void clickToWhomButton() {
+        wait5SecondsForClickabilityOfElement(toWhomButton);
+        toWhomButton.click();
     }
+    public void clickToSelfButton() {
+        wait5SecondsForVisibilityOfElement(toSelfButton);
+        wait5SecondsForClickabilityOfElement(toSelfButton);
+        toSelfButton.click();
+    }
+    public void fillThemeField(String theme) {
+        wait5SecondsForClickabilityOfElement(themeField);
+        themeField.click();
+        wait5SecondsForClickabilityOfElement(themeField);
+        themeField.sendKeys(theme, Keys.ENTER);
+    }
+
+    public void fillMailTextField(String searchSummary){
+        wait5SecondsForClickabilityOfElement(mailTextField);
+        mailTextField.sendKeys(searchSummary);
+    }
+    public void clickSendMailButton() {
+        wait5SecondsForClickabilityOfElement(sendMailButton);
+        sendMailButton.click();
+    }
+}
 
 
 

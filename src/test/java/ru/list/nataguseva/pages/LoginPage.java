@@ -3,8 +3,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 public class LoginPage extends BasePage{
@@ -21,6 +19,15 @@ public class LoginPage extends BasePage{
     @FindBy(xpath = "//form/div[3]/button")
     WebElement submitPasswordButton;
 
+    @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[2]/div/div/div[2]/div[3]/div/div/div/ul/li/div/button")
+    WebElement accountMenuButton;
+
+    @FindBy(xpath = "//div[@data-t='popup:context-menu']")
+    WebElement accountMenuPopUp;
+
+    @FindBy(xpath = "//div[@class='ContextMenu']/button")
+    WebElement logoutButton;
+
 
     public LoginPage(WebDriver driver) {
         this.driver = driver;
@@ -28,29 +35,31 @@ public class LoginPage extends BasePage{
     }
 
     public void setLogin(String login) {
-        (new WebDriverWait(driver, 6)).
-                until(ExpectedConditions.elementToBeClickable(loginField));
+        wait5SecondsForClickabilityOfElement(loginField);
         loginField.sendKeys(login);
 
     }
 
     public void setPassword(String password) {
-        (new WebDriverWait(driver, 6)).
-                until(ExpectedConditions.
-                        elementToBeClickable(passwordField));
+       wait5SecondsForClickabilityOfElement(passwordField);
         passwordField.sendKeys(password);
     }
 
     public void clickSubmitLoginButton() {
-        (new WebDriverWait(driver, 6)).
-                until(ExpectedConditions.
-                        elementToBeClickable(submitLoginButton));
+        wait5SecondsForClickabilityOfElement(submitLoginButton);
         submitLoginButton.click();
     }
     public void clickSubmitPasswordButton() {
-        (new WebDriverWait(driver, 6)).
-                until(ExpectedConditions.
-                        elementToBeClickable(submitPasswordButton));
+        wait5SecondsForClickabilityOfElement(submitPasswordButton);
         submitPasswordButton.click();
     }
-}
+    public void logout() {
+        wait5SecondsForClickabilityOfElement(accountMenuButton);
+        accountMenuButton.click();
+        wait5SecondsForVisibilityOfElement(accountMenuPopUp);
+        wait5SecondsForClickabilityOfElement(logoutButton);
+        logoutButton.click();
+    }
+
+    }
+

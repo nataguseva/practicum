@@ -1,5 +1,7 @@
 package ru.list.nataguseva;
 
+import org.junit.After;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
@@ -11,8 +13,10 @@ import ru.list.nataguseva.resources.Helper;
 
 public class MailBoxTest {
     static WebDriver driver;
-    static int oldMailWithThemeCount;
-    static int newMailWithThemeCount;
+    static String searchSummary;
+    static int oldCountOfMails;
+    static int newCountOfMails;
+
     LoginPage loginPage;
     MailBoxPage mailBoxPage;
 
@@ -49,19 +53,25 @@ public class MailBoxTest {
 
         mailBoxPage.clickInboxFolderButton();
         Thread.sleep(2000);
-        mailBoxPage.getSearchSummaryField();
-       // mailBoxPage.hoverInboxFolderButton();
-        newMailWithThemeCount = Helper.getCount(mailBoxPage.getSearchSummaryField());
-        System.out.println(newMailWithThemeCount);
+        searchSummary = mailBoxPage.getSearchSummaryField();
+        oldCountOfMails = Helper.getCount(mailBoxPage.getSearchSummaryField());
         mailBoxPage.clickWriteMailButton();
+        mailBoxPage.clickToWhomButton();
+        mailBoxPage.clickToSelfButton();
+        mailBoxPage.fillThemeField(ConfProperties.getProperty("theme"));
+        mailBoxPage.fillMailTextField("Найдено " + searchSummary);
+        mailBoxPage.clickSendMailButton();
+        Thread.sleep(15000);
+        driver.navigate().refresh();
+        newCountOfMails = Helper.getCount(mailBoxPage.getSearchSummaryField());
 
-
-    /*@AfterClass
-    public static void tearDown() {
-        profilePage.entryMenu();
-        profilePage.userLogout();
-        driver.quit();
+        Assert.assertTrue(newCountOfMails > oldCountOfMails);
     }
-    */
+
+        @After
+    public void tearDown() {
+            driver.get(ConfProperties.getProperty("authorizationYandexURL"));
+            loginPage.logout();
+        driver.quit();
     }
 }
