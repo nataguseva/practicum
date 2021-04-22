@@ -42,9 +42,7 @@ public class MailBoxTest {
         driver.get(ConfProperties.getProperty("mailYandexURL"));
 
         mailBoxPage = new MailBoxPage(driver);
-        mailBoxPage.clickCollapsedSearchField();
-        mailBoxPage.fillExpandedSearchField(ConfProperties.getProperty("theme"));
-        mailBoxPage.clickSearchButton();
+        mailBoxPage.filterMailsByTheme(ConfProperties.getProperty("theme"));
         mailBoxPage.clickFoldersButton();
         Thread.sleep(5000);
 

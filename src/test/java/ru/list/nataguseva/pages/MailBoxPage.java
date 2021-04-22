@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import ru.list.nataguseva.ConfProperties;
 
 public class MailBoxPage extends BasePage{
 
@@ -110,6 +111,11 @@ public class MailBoxPage extends BasePage{
     public void clickSendMailButton() {
         waitForClickabilityOfElement(sendMailButton);
         sendMailButton.click();
+    }
+    public void filterMailsByTheme(String theme) {
+        clickCollapsedSearchField();
+        fillExpandedSearchField(theme);
+        clickSearchButton();
     }
 
 
