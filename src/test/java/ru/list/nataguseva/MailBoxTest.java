@@ -6,10 +6,10 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import ru.list.nataguseva.pages.*;
+
 import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.chrome.ChromeDriver;
-import ru.list.nataguseva.resources.Helper;
-//import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class MailBoxTest {
     static WebDriver driver;
@@ -18,19 +18,20 @@ public class MailBoxTest {
     static int newCountOfMails;
 
     LoginPage loginPage;
+    ProfilePage profilePage;
     MailBoxPage mailBoxPage;
+    MailBoxPage newMailboxPage;
 
 
     @BeforeClass
     public static void setup() {
-        System.setProperty("webdriver.chrome.driver", ConfProperties.getProperty("chromedriver"));        //System.setProperty("webdriver.gecko.driver", ConfProperties.getProperty("geckodriver"))
+        System.setProperty("webdriver.chrome.driver", ConfProperties.getProperty("chromedriver"));
         driver = new ChromeDriver();
-        //driver = new FirefoxDriver();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
 
     @Test
-    public void mailBoxTest() throws InterruptedException {
+    public void checkMailboxBeforeLetter() {
 
         driver.get(ConfProperties.getProperty("authorizationYandexURL"));
 
@@ -40,19 +41,16 @@ public class MailBoxTest {
         loginPage.setPassword(ConfProperties.getProperty("password"));
         loginPage.clickSubmitPasswordButton();
 
-        Thread.sleep(2000);
-
-        driver.get(ConfProperties.getProperty("mailYandexURL"));
+        profilePage = new ProfilePage(driver);
+        profilePage.clickAccountButton();
+        profilePage.clickMailboxButton();
 
         mailBoxPage = new MailBoxPage(driver);
         mailBoxPage.clickCollapsedSearchField();
         mailBoxPage.fillExpandedSearchField(ConfProperties.getProperty("theme"));
         mailBoxPage.clickSearchButton();
         mailBoxPage.clickFoldersButton();
-        Thread.sleep(5000);
-
         mailBoxPage.clickInboxFolderButton();
-        Thread.sleep(2000);
         searchSummary = mailBoxPage.getSearchSummaryField();
         oldCountOfMails = Helper.getCount(mailBoxPage.getSearchSummaryField());
         mailBoxPage.clickWriteMailButton();
@@ -61,17 +59,23 @@ public class MailBoxTest {
         mailBoxPage.fillThemeField(ConfProperties.getProperty("theme"));
         mailBoxPage.fillMailTextField("Найдено " + searchSummary);
         mailBoxPage.clickSendMailButton();
-        Thread.sleep(15000);
-        driver.navigate().refresh();
+
+        mailBoxPage.clickSearchInAllFoldersButton();
+        mailBoxPage.clickFoldersButton();
+        mailBoxPage.clickInboxFolderButton();
         newCountOfMails = Helper.getCount(mailBoxPage.getSearchSummaryField());
 
-        Assert.assertTrue(newCountOfMails > oldCountOfMails);
+        System.out.println("old " + oldCountOfMails);
+        System.out.println("new " + newCountOfMails);
+
+ Assert.assertTrue(newCountOfMails > oldCountOfMails);
+ }
+
+ @After public void tearDown() {
+ driver.get(ConfProperties.getProperty("authorizationYandexURL"));
+ loginPage.logout();
+ driver.quit();
+ }
+
     }
 
-        @After
-    public void tearDown() {
-            driver.get(ConfProperties.getProperty("authorizationYandexURL"));
-            loginPage.logout();
-        driver.quit();
-    }
-}

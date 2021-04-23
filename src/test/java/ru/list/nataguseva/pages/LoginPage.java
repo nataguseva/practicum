@@ -35,29 +35,29 @@ public class LoginPage extends BasePage{
     }
 
     public void setLogin(String login) {
-        wait5SecondsForClickabilityOfElement(loginField);
+        waitForClickabilityOfElement(loginField, getDefaultDuration());
         loginField.sendKeys(login);
 
     }
 
     public void setPassword(String password) {
-       wait5SecondsForClickabilityOfElement(passwordField);
+       waitForClickabilityOfElement(passwordField, getDefaultDuration());
         passwordField.sendKeys(password);
     }
 
     public void clickSubmitLoginButton() {
-        wait5SecondsForClickabilityOfElement(submitLoginButton);
+        waitForClickabilityOfElement(submitLoginButton, getDefaultDuration());
         submitLoginButton.click();
     }
     public void clickSubmitPasswordButton() {
-        wait5SecondsForClickabilityOfElement(submitPasswordButton);
+        waitForClickabilityOfElement(submitPasswordButton, getDefaultDuration());
         submitPasswordButton.click();
     }
     public void logout() {
-        wait5SecondsForClickabilityOfElement(accountMenuButton);
+        waitForClickabilityOfElement(accountMenuButton, getDefaultDuration());
         accountMenuButton.click();
-        wait5SecondsForVisibilityOfElement(accountMenuPopUp);
-        wait5SecondsForClickabilityOfElement(logoutButton);
+        waitForVisibilityOfElement(accountMenuPopUp, getDefaultDuration());
+        waitForClickabilityOfElement(logoutButton, getDefaultDuration());
         logoutButton.click();
     }
 
