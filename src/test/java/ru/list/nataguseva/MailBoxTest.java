@@ -11,58 +11,58 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.chrome.ChromeDriver;
 
-public class MailBoxTest {
+public class MailBoxTest extends BaseTest {
     static WebDriver driver;
     static String searchSummary;
     static int oldCountOfMails;
     static int newCountOfMails;
 
     LoginPage loginPage;
-    MailBoxPage mailBoxPage;
+    ProfilePage profilePage;
+    MailboxPage mailBoxPage;
 
 
     @BeforeClass
     public static void setup() {
-        System.setProperty("webdriver.chrome.driver", ConfProperties.getProperty("chromedriver"));        //System.setProperty("webdriver.gecko.driver", ConfProperties.getProperty("geckodriver"))
+        System.setProperty("webdriver.chrome.driver", ConfProperties.getProperty("chromedriver"));
         driver = new ChromeDriver();
-        //driver = new FirefoxDriver();
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
     }
 
     @Test
-    public void mailBoxTest() throws InterruptedException {
+    public void mailBoxTest() {
 
-        driver.get(ConfProperties.getProperty("authorizationYandexURL"));
+        open(driver, ConfProperties.getProperty("authorizationYandexURL"));
 
         loginPage = new LoginPage(driver);
         loginPage.login(ConfProperties.getProperty("login"), ConfProperties.getProperty("password"));
 
-        Thread.sleep(2000);
+        profilePage = new ProfilePage(driver);
+        profilePage.clickAccountButton();
+        profilePage.clickMailboxButton();
 
-        driver.get(ConfProperties.getProperty("mailYandexURL"));
+        //open(driver, ConfProperties.getProperty("mailYandexURL"));
+        mailBoxPage = new MailboxPage(driver);
+        mailBoxPage.filterIncomingMailsByTheme(ConfProperties.getProperty("theme"));
 
-        mailBoxPage = new MailBoxPage(driver);
-        mailBoxPage.filterMailsByTheme(ConfProperties.getProperty("theme"));
-        mailBoxPage.clickFoldersButton();
-        Thread.sleep(5000);
-
-        mailBoxPage.clickInboxFolderButton();
-        Thread.sleep(2000);
         searchSummary = mailBoxPage.getSearchSummaryField();
-        oldCountOfMails = Helper.getCount(mailBoxPage.getSearchSummaryField());
-        mailBoxPage.writeMail(ConfProperties.getProperty("theme"), mailBoxPage.getSearchSummaryField());
-
-        Thread.sleep(15000);
+        oldCountOfMails = Helper.getCount(searchSummary);
+        mailBoxPage.writeMail(ConfProperties.getProperty("theme"), searchSummary);
         driver.navigate().refresh();
+
         newCountOfMails = Helper.getCount(mailBoxPage.getSearchSummaryField());
+        System.out.println("old " + oldCountOfMails);
+        System.out.println("new " + newCountOfMails);
+
 
         Assert.assertTrue(newCountOfMails > oldCountOfMails);
     }
 
     @After
     public void tearDown() {
-        driver.get(ConfProperties.getProperty("authorizationYandexURL"));
+        open(driver, ConfProperties.getProperty("authorizationYandexURL"));
         loginPage.logout();
         driver.quit();
     }
+
 }

@@ -20,7 +20,7 @@ public class LoginPage extends BasePage {
     @FindBy(xpath = "//form/div[3]/button")
     WebElement submitPasswordButton;
 
-    @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[2]/div/div/div[2]/div[3]/div/div/div/ul/li/div/button")
+    @FindBy(xpath = "//button[@class='ContextMenuButton']")
     WebElement accountMenuButton;
 
     @FindBy(xpath = "//div[@data-t='popup:context-menu']")
@@ -36,34 +36,34 @@ public class LoginPage extends BasePage {
     }
 
     public void setLogin(String login) {
-        waitForClickabilityOfElement(loginField);
+        waitForClickabilityOfElement(loginField, getDefaultDuration());
         loginField.sendKeys(login);
 
     }
 
     public void setPassword(String password) {
-        waitForClickabilityOfElement(passwordField);
+        waitForClickabilityOfElement(passwordField, getDefaultDuration());
         passwordField.sendKeys(password);
     }
 
     public void clickSubmitLoginButton() {
-        waitForClickabilityOfElement(submitLoginButton);
+        waitForClickabilityOfElement(submitLoginButton, getDefaultDuration());
         submitLoginButton.click();
     }
 
     public void clickSubmitPasswordButton() {
-        waitForClickabilityOfElement(submitPasswordButton);
+        waitForClickabilityOfElement(submitPasswordButton, getDefaultDuration());
         submitPasswordButton.click();
     }
 
     public void clickAccountMenuButton() {
-        waitForClickabilityOfElement(accountMenuButton);
+        waitForClickabilityOfElement(accountMenuButton, getDefaultDuration() * 2);
         accountMenuButton.click();
     }
 
     public void clickLogoutButton() {
-        waitForVisibilityOfElement(accountMenuPopUp);
-        waitForClickabilityOfElement(logoutButton);
+        waitForVisibilityOfElement(accountMenuPopUp, getDefaultDuration());
+        waitForClickabilityOfElement(logoutButton, getDefaultDuration());
         logoutButton.click();
     }
 
