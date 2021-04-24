@@ -20,7 +20,6 @@ public class MailBoxTest {
     LoginPage loginPage;
     ProfilePage profilePage;
     MailBoxPage mailBoxPage;
-    MailBoxPage newMailboxPage;
 
 
     @BeforeClass
@@ -31,7 +30,7 @@ public class MailBoxTest {
     }
 
     @Test
-    public void checkMailboxBeforeLetter() {
+    public void mailBoxTest() {
 
         driver.get(ConfProperties.getProperty("authorizationYandexURL"));
 
@@ -46,6 +45,9 @@ public class MailBoxTest {
         profilePage.clickMailboxButton();
 
         mailBoxPage = new MailBoxPage(driver);
+        /**
+         * Определить количество писем во входящих с заданной темой
+         */
         mailBoxPage.clickCollapsedSearchField();
         mailBoxPage.fillExpandedSearchField(ConfProperties.getProperty("theme"));
         mailBoxPage.clickSearchButton();
@@ -53,29 +55,36 @@ public class MailBoxTest {
         mailBoxPage.clickInboxFolderButton();
         searchSummary = mailBoxPage.getSearchSummaryField();
         oldCountOfMails = Helper.getCount(mailBoxPage.getSearchSummaryField());
+        /**
+         * Написать письмо
+         */
         mailBoxPage.clickWriteMailButton();
         mailBoxPage.clickToWhomButton();
         mailBoxPage.clickToSelfButton();
         mailBoxPage.fillThemeField(ConfProperties.getProperty("theme"));
         mailBoxPage.fillMailTextField("Найдено " + searchSummary);
         mailBoxPage.clickSendMailButton();
-
+        /**
+         * Повторно определить количество писем во входящих с заданной темой
+         */
         mailBoxPage.clickSearchInAllFoldersButton();
+        mailBoxPage.clickCheckMailboxButton();
         mailBoxPage.clickFoldersButton();
         mailBoxPage.clickInboxFolderButton();
         newCountOfMails = Helper.getCount(mailBoxPage.getSearchSummaryField());
-
         System.out.println("old " + oldCountOfMails);
         System.out.println("new " + newCountOfMails);
 
- Assert.assertTrue(newCountOfMails > oldCountOfMails);
- }
-
- @After public void tearDown() {
- driver.get(ConfProperties.getProperty("authorizationYandexURL"));
- loginPage.logout();
- driver.quit();
- }
-
+        Assert.assertTrue(newCountOfMails > oldCountOfMails);
     }
+
+    @After
+    public void tearDown() {
+        driver.get(ConfProperties.getProperty("authorizationYandexURL"));
+        loginPage.logout();
+        driver.quit();
+    }
+
+}
+
 
