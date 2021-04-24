@@ -1,4 +1,4 @@
-package ru.list.nataguseva;
+package ru.list.nataguseva.UI;
 
 import java.io.FileInputStream;
 import java.io.IOException;

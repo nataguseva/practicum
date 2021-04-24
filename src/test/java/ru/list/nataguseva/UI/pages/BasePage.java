@@ -1,4 +1,4 @@
-package ru.list.nataguseva.pages;
+package ru.list.nataguseva.UI.pages;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

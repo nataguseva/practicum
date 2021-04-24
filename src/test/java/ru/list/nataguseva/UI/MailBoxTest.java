@@ -1,11 +1,11 @@
-package ru.list.nataguseva;
+package ru.list.nataguseva.UI;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
-import ru.list.nataguseva.pages.*;
+import ru.list.nataguseva.UI.pages.*;
 
 import java.util.concurrent.TimeUnit;
 

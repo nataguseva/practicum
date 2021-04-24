@@ -1,4 +1,4 @@
-package ru.list.nataguseva;
+package ru.list.nataguseva.UI;
 
 public class Helper {
 
