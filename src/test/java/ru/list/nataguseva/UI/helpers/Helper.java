@@ -1,4 +1,5 @@
-package ru.list.nataguseva.UI;
+package ru.list.nataguseva.UI.helpers;
+import ru.list.nataguseva.UI.tests.*;
 
 public class Helper {
 

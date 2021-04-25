@@ -1,15 +1,16 @@
-package ru.list.nataguseva.UI;
+package ru.list.nataguseva.UI.tests;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
-import ru.list.nataguseva.UI.pages.*;
-
-import java.util.concurrent.TimeUnit;
-
 import org.openqa.selenium.chrome.ChromeDriver;
+import java.util.concurrent.TimeUnit;
+import ru.list.nataguseva.UI.pages.*;
+import ru.list.nataguseva.UI.helpers.*;
+
+
 
 public class MailBoxTest {
     static WebDriver driver;
@@ -24,7 +25,8 @@ public class MailBoxTest {
 
     @BeforeClass
     public static void setup() {
-        System.setProperty("webdriver.chrome.driver", ConfProperties.getProperty("chromedriver"));
+        System.setProperty("webdriver.chrome.driver",
+                ConfProperties.getProperty("chromedriver"));
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
