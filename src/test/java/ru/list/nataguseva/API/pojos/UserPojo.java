@@ -1,11 +1,19 @@
 package ru.list.nataguseva.API.pojos;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-public class UserPojoFull{
-    @JsonProperty("last_name")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class UserPojo {
+	@JsonProperty("last_name")
 	private String lastName;
 	private int id;
 	private String avatar;
@@ -13,13 +21,7 @@ public class UserPojoFull{
 	private String firstName;
 	private String email;
 
-	public UserPojoFull(String lastName, int id, String avatar, String firstName, String email) {
-		this.lastName = lastName;
-		this.id = id;
-		this.avatar = avatar;
-		this.firstName = firstName;
-		this.email = email;
-	}
+
 
 	public String getLastName() {
 		return lastName;

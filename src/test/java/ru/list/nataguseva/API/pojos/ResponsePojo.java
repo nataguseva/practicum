@@ -12,13 +12,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class PagePojo {
+public class ResponsePojo {
     private int page;
     @JsonProperty("per_page")
     private int perPage;
     private int total;
     @JsonProperty("total_pages")
     private int totalPages;
-    private UserPojoFull[] data;
+    private UserPojo[] data;
 
 }
