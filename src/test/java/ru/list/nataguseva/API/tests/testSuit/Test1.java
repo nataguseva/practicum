@@ -14,12 +14,10 @@ import static io.restassured.RestAssured.given;
 
 public class Test1 {
     private static RequestSpecification spec;
-    private static ResponsePojo response;
-    private static UserPojo[] users;
     private static String actualEmail;
     static boolean testIsPassed = false;
 
-    private static int pageAndUserCounter = 1;
+    private final static int pageAndUserCounter = 1;
     private final static String expectedFirstName = ConfProperties.getProperty("user" + getPageAndUserCounter() + ".firstName");
     private final static String expectedLastName = ConfProperties.getProperty("user" + getPageAndUserCounter() + ".lastName");
     private final static String expectedEmail = ConfProperties.getProperty("user" + getPageAndUserCounter() + ".email");
@@ -40,7 +38,7 @@ public class Test1 {
 
     @Test
     public void getResponse() {
-        response = given()
+        ResponsePojo response = given()
                 .spec(spec)
                 .when()
                 .get()
@@ -48,7 +46,7 @@ public class Test1 {
                 .statusCode(200)
                 .extract().as(ResponsePojo.class);
 
-        users = response.getData();
+        UserPojo[] users = response.getData();
         for (UserPojo userPojo : users) {
             UserPojo user = new UserPojo(userPojo.getLastName(), userPojo.getId(), userPojo.getAvatar(), userPojo.getFirstName(), userPojo.getEmail());
             if (

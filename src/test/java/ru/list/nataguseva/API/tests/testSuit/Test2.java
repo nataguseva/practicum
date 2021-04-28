@@ -14,7 +14,6 @@ import static io.restassured.RestAssured.given;
 
 public class Test2 {
     private static RequestSpecification spec;
-    private static ResponsePojo response;
     private static UserPojo[] users;
     private final static int pageAndUserCounter = 2;
     static boolean testIsPassed = false;
@@ -40,7 +39,7 @@ public class Test2 {
 
     @Test
     public void getResponse() {
-        response = given()
+        ResponsePojo response = given()
                 .spec(spec)
                 .when()
                 .get()
