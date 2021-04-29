@@ -3,38 +3,42 @@ package ru.list.nataguseva.API.tests.testSuit;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
+import lombok.Data;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import ru.list.nataguseva.API.pojos.*;
+import ru.list.nataguseva.API.tests.BaseTest;
 import ru.list.nataguseva.UI.helpers.ConfProperties;
 
 
 import static io.restassured.RestAssured.given;
 
-public class Test1 {
+@Data
+public class Test1 extends BaseTest {
+
     private static RequestSpecification spec;
-    private static String actualEmail;
-    static boolean testIsPassed = false;
 
-    private final static int pageAndUserCounter = 1;
-    private final static String expectedFirstName = ConfProperties.getProperty("user" + getPageAndUserCounter() + ".firstName");
-    private final static String expectedLastName = ConfProperties.getProperty("user" + getPageAndUserCounter() + ".lastName");
-    private final static String expectedEmail = ConfProperties.getProperty("user" + getPageAndUserCounter() + ".email");
+    private final static int PAGE_AND_USER_COUNTER = 1;
 
-    public static int getPageAndUserCounter() {
-        return pageAndUserCounter;
-    }
+    private final static String EXPECTED_FIRST_NAME = ConfProperties.getProperty("user" + PAGE_AND_USER_COUNTER + ".firstName");
+
+    private final static String EXPECTED_LAST_NAME = ConfProperties.getProperty("user" + PAGE_AND_USER_COUNTER + ".lastName");
+
+    private final static String EXPECTED_EMAIL = ConfProperties.getProperty("user" + PAGE_AND_USER_COUNTER + ".email");
+
 
     @BeforeClass
+
     public static void initSpec() {
         spec = new RequestSpecBuilder()
                 .setContentType(ContentType.JSON)
                 .setBaseUri(ConfProperties.getProperty("baseURI"))
                 .setBasePath(ConfProperties.getProperty("endpoint"))
-                .addParam("page", getPageAndUserCounter())
+                .addParam("page", PAGE_AND_USER_COUNTER)
                 .build();
     }
+
 
     @Test
     public void getResponse() {
@@ -47,30 +51,15 @@ public class Test1 {
                 .extract().as(ResponsePojo.class);
 
         UserPojo[] users = response.getData();
-        for (UserPojo userPojo : users) {
-            UserPojo user = new UserPojo(userPojo.getLastName(), userPojo.getId(), userPojo.getAvatar(), userPojo.getFirstName(), userPojo.getEmail());
+        for (UserPojo user : users) {
             if (
-                    (expectedFirstName.equals(user.getFirstName()))
-                            && (expectedLastName.equals(user.getLastName()))
+                    (EXPECTED_FIRST_NAME.equals(user.getFirstName()))
+                            && (EXPECTED_LAST_NAME.equals(user.getLastName()))
             ) {
                 actualEmail = user.getEmail();
-                testIsPassed = expectedEmail.equals(actualEmail);
+                Assert.assertEquals(actualEmail, EXPECTED_EMAIL);
             }
         }
-        if (!testIsPassed) {
-            System.out.println(
-                    "Expected email for "
-                            + expectedFirstName
-                            + " "
-                            + expectedLastName
-                            + " is "
-                            + expectedEmail
-                            + "\n"
-                            + "Actual email is "
-                            + actualEmail
-            );
-        }
-        Assert.assertTrue(testIsPassed);
     }
 }
 
