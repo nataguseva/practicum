@@ -11,25 +11,18 @@ import ru.list.nataguseva.API.pojos.*;
 import ru.list.nataguseva.API.tests.BaseTest;
 import ru.list.nataguseva.UI.helpers.ConfProperties;
 
-
 import static io.restassured.RestAssured.given;
 
 @Data
 public class Test1 extends BaseTest {
 
     private static RequestSpecification spec;
-
     private final static int PAGE_AND_USER_COUNTER = 1;
-
     private final static String EXPECTED_FIRST_NAME = ConfProperties.getProperty("user" + PAGE_AND_USER_COUNTER + ".firstName");
-
     private final static String EXPECTED_LAST_NAME = ConfProperties.getProperty("user" + PAGE_AND_USER_COUNTER + ".lastName");
-
     private final static String EXPECTED_EMAIL = ConfProperties.getProperty("user" + PAGE_AND_USER_COUNTER + ".email");
 
-
     @BeforeClass
-
     public static void initSpec() {
         spec = new RequestSpecBuilder()
                 .setContentType(ContentType.JSON)
@@ -38,7 +31,6 @@ public class Test1 extends BaseTest {
                 .addParam("page", PAGE_AND_USER_COUNTER)
                 .build();
     }
-
 
     @Test
     public void checkEmail() {
