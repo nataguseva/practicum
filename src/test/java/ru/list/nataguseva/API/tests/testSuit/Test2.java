@@ -39,7 +39,7 @@ public class Test2 extends BaseTest {
 
 
     @Test
-    public void getResponse() {
+    public void checkEmail() {
         ResponsePojo response = given()
                 .spec(spec)
                 .when()
